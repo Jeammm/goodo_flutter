@@ -18,8 +18,12 @@ class Query {
 class TodosNotifier extends StateNotifier<List<Todo>> {
   TodosNotifier() : super(const []);
 
-  Future<void> loadTodos({Query? query}) async {
-    final todoList = await TodoApi.getTodoList(query: query);
+  void clearTodos() {
+    state = [];
+  }
+
+  Future<void> loadTodos({Query? query, String? search}) async {
+    final todoList = await TodoApi.getTodoList(query: query, search: search);
     state = todoList;
   }
 

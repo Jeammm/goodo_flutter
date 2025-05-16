@@ -14,9 +14,12 @@ class TodoApi {
 
   static final dio = Dio();
 
-  static Future<List<Todo>> getTodoList({Query? query}) async {
+  static Future<List<Todo>> getTodoList({Query? query, String? search}) async {
     final url = _constructTodoListUrl();
-    final response = await dio.get(url, queryParameters: query?.toJson());
+    final response = await dio.get(
+      url,
+      queryParameters: search != null ? {'search': search} : query?.toJson(),
+    );
     final todosData =
         (response.data as List<dynamic>)
             .map((todo) => Todo.fromJson(todo as Map<String, dynamic>))

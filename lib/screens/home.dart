@@ -25,10 +25,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     _todoFuture = ref.read(todosProvider.notifier).loadTodos();
   }
 
-  void _onClickSearch(context) {
-    Navigator.of(
+  void _onClickSearch(context) async {
+    await Navigator.of(
       context,
     ).push(MaterialPageRoute(builder: (ctx) => const SearchScreen()));
+
+    ref.read(todosProvider.notifier).loadTodos();
   }
 
   void _onClickNewTodo(context) async {
