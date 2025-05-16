@@ -81,7 +81,7 @@ class TodoItem extends ConsumerWidget {
         child: Icon(Icons.delete, color: Colors.white),
       ),
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        margin: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           border: Border.all(color: Colors.grey.shade300),
@@ -110,6 +110,7 @@ class TodoItem extends ConsumerWidget {
             serializedDescription,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: Colors.grey.shade600),
           ),
         ),
       ),
