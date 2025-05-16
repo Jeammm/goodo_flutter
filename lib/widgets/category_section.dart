@@ -26,7 +26,7 @@ class _CategorySectionState extends ConsumerState<CategorySection> {
     final queryData = ref.watch(queryProvider);
 
     void selectQuery(QueryMode mode, Object value) {
-      ref.read(queryProvider.notifier).setQuery(mode, value);
+      ref.read(queryProvider.notifier).setQuery(ref, mode, value);
       Navigator.of(context).pop();
     }
 
@@ -53,7 +53,7 @@ class _CategorySectionState extends ConsumerState<CategorySection> {
                       },
                       selected:
                           queryData.query.mode == QueryMode.tag &&
-                          queryData.query.value == cat.id,
+                          queryData.query.value.toString().contains(cat.id),
                       leading: Stack(
                         alignment: Alignment.center,
                         children: [

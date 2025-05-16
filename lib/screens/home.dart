@@ -76,7 +76,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 }
 
                 if (todos.isEmpty) {
-                  return Center(child: Text('You have not create any todo'));
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 32.0),
+                      child: Text(
+                        'No todos yet.\nTap + to add your first one!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  );
                 }
 
                 return ListView.builder(

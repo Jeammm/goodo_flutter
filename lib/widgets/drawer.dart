@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:goodo_flutter/provider/query_provider.dart';
+import 'package:goodo_flutter/screens/setting.dart';
 import 'package:goodo_flutter/widgets/category_section.dart';
 import 'package:goodo_flutter/widgets/drawer_tile_item.dart';
 
@@ -12,7 +13,7 @@ class CustomDrawer extends ConsumerWidget {
     final queryData = ref.watch(queryProvider);
 
     void selectQuery(QueryMode mode, Object value) {
-      ref.read(queryProvider.notifier).setQuery(mode, value);
+      ref.read(queryProvider.notifier).setQuery(ref, mode, value);
       Navigator.of(context).pop();
     }
 
@@ -101,7 +102,12 @@ class CustomDrawer extends ConsumerWidget {
 
             DrawerTileItem(
               title: 'Settings',
-              onTileTap: () {},
+              onTileTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (ctx) => SettingScreen()));
+              },
               selected: false,
               leading: Icon(Icons.settings_outlined, size: 24),
             ),

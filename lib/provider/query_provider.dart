@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:goodo_flutter/provider/todo_provider.dart';
 
 enum QueryMode { normal, tag }
 
@@ -39,8 +40,21 @@ class QueryState {
 class QueryNotifier extends StateNotifier<QueryState> {
   QueryNotifier() : super(QueryState());
 
-  void setQuery(QueryMode mode, Object value) {
+  Query get formattedQuery {
+    if (state.query.mode == QueryMode.normal) {
+      return Query(mode: state.query.value.toString());
+    }
+
+    return Query(category: state.query.value.toString().split('-')[0]);
+  }
+
+  void setQuery(WidgetRef ref, QueryMode mode, Object value) {
     state = state.copyWith(query: QueryData(mode: mode, value: value));
+
+    final todosNotifier = ref.read(todosProvider.notifier);
+    todosNotifier.loadTodos(
+      query: formattedQuery,
+    ); // This now updates the UI properly
   }
 
   void clearQuery() {

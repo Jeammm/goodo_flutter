@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:goodo_flutter/models/todo.dart';
+import 'package:goodo_flutter/provider/todo_provider.dart';
 
 @immutable
 class TodoApi {
@@ -13,9 +14,9 @@ class TodoApi {
 
   static final dio = Dio();
 
-  static Future<List<Todo>> getTodoList() async {
+  static Future<List<Todo>> getTodoList({Query? query}) async {
     final url = _constructTodoListUrl();
-    final response = await dio.get(url);
+    final response = await dio.get(url, queryParameters: query?.toJson());
     final todosData =
         (response.data as List<dynamic>)
             .map((todo) => Todo.fromJson(todo as Map<String, dynamic>))

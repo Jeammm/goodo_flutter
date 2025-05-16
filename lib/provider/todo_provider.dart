@@ -2,15 +2,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:goodo_flutter/models/todo.dart';
 import 'package:goodo_flutter/service/todo_api.dart';
 
-// final todoListProvider = FutureProvider.autoDispose((ref) {
-//   return ApiHelper.getTodoList();
-// });
+class Query {
+  const Query({this.category, this.mode});
+
+  final String? category;
+  final String? mode;
+  Map<String, dynamic> toJson() {
+    return {
+      if (category != null) 'category': category,
+      if (mode != null) 'mode': mode,
+    };
+  }
+}
 
 class TodosNotifier extends StateNotifier<List<Todo>> {
   TodosNotifier() : super(const []);
 
-  Future<void> loadTodos() async {
-    final todoList = await TodoApi.getTodoList();
+  Future<void> loadTodos({Query? query}) async {
+    final todoList = await TodoApi.getTodoList(query: query);
     state = todoList;
   }
 
@@ -46,7 +55,6 @@ class TodosNotifier extends StateNotifier<List<Todo>> {
     try {
       await TodoApi.updateTodoById(todo);
     } catch (e) {
-      print(e);
       state = [
         for (int i = 0; i < state.length; i++)
           if (i == updateIndex) preUpdate else state[i],
