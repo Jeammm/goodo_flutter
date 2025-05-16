@@ -103,6 +103,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       appBar: AppBar(
         title: TextField(
           controller: _searchController,
+          autofocus: true,
           decoration: InputDecoration(
             hintText: "Search todos...",
             border: InputBorder.none,
